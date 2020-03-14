@@ -1,0 +1,15 @@
+﻿@model Auth
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+
+<form method="post" asp-action="Authenticate">
+    <label>Логин:</label><br />
+    <input type="text" name="Login" /><br /><br />
+    <label>Пароль:</label><br />
+    <input type="text" name="Password" /><br /><br />
+    <input type="submit" value="Submit" />
+</form>
+
