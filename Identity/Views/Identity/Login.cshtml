@@ -5,11 +5,23 @@
 
 <h1>Login</h1>
 
-<form method="post" asp-action="Authenticate">
-    <label>Логин:</label><br />
-    <input type="text" name="Login" /><br /><br />
-    <label>Пароль:</label><br />
-    <input type="text" name="Password" /><br /><br />
-    <input type="submit" value="Submit" />
+<form method="post" onsubmit="shake()" asp-action="Authenticate" asp-controller="Identity" asp-antiforgery="true">
+    <div>
+        <div class="validation" asp-validation-summary="All"></div>
+        <div>
+            <label>Login</label><br />
+            <input type="text" asp-for="Email" /><br /><br />
+        </div>
+        <div>
+            <label>Password</label><br />
+            <input type="text" asp-for="Password" /><br /><br />
+        </div>
+        <input type="submit" value="Submit" />
+    </div>
 </form>
+@section scripts{
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
 

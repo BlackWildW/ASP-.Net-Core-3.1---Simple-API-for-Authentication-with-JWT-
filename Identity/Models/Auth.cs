@@ -8,9 +8,10 @@ namespace Identity.Models
 {
     public class Auth
     {
-        [Required(ErrorMessage = "Enter Login")]
-        public string Login { get; set; }
-        [Required(ErrorMessage = "Enter Password")]
+        [Required(ErrorMessage = "The field Email is empty")]
+        [EmailAddress]
+        public string Email { get; set; }
+        [Required(ErrorMessage = "The field Password is empty")]
         public string Password { get; set; }
 
     }  

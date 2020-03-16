@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Identity.Entities;
 using Identity.Helpers;
 using Identity.Models;
 using Identity.UserService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Identity.Controllers
@@ -13,9 +15,8 @@ namespace Identity.Controllers
     {
         public IUserService userservice;
         public IdentityContext db;
-        public IdentityController(IUserService userService, IdentityContext db)
+        public IdentityController(IUserService userService)
         {
-            db = db;
             userservice = userService;
         }
         public IActionResult Register()
@@ -26,12 +27,13 @@ namespace Identity.Controllers
         {
             return View();
         }
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult Authenticate([FromForm] Auth auth)
         {
             try
             {
-                var LoginUser = userservice.Login(auth.Login, auth.Password);
+                var LoginUser = userservice.Login(auth.Email, auth.Password);
                 return Ok(LoginUser);
             }
             catch(AppException ex)
@@ -40,12 +42,13 @@ namespace Identity.Controllers
 
             }
         }
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult Registration([FromForm] User users)
         {
             try
             {
-                var user = userservice.Registration(users.Username, users.Login, users.Password);
+                var user = userservice.Registration(users.Name, users.Email, users.Password,users.ConfirmPassword);
                 return Ok(user);
             }
             catch (AppException ex)
@@ -53,11 +56,12 @@ namespace Identity.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+        [Authorize(Roles = Role.Admin)]
         [HttpGet]
         public IActionResult GetAll()
         {
             var users = userservice.GetAll();
-            return Ok(users);
+            return Ok(users);   
         }
     }
 }
