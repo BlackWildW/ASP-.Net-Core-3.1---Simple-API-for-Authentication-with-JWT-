@@ -21,6 +21,5 @@ namespace Identity.Models
         [Compare("Password")]
         public string ConfirmPassword { get; set; }
         public string Role { get; set; }
-        public string token { get; set; }
     }
 }

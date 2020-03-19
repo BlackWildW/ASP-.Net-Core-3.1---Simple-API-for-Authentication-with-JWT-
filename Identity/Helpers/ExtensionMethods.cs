@@ -16,8 +16,8 @@ namespace Identity.Helpers
         public static User WithoutPassword(this User user)
         {
             if (user == null) return null;
-            user.Password = null;
-            user.ConfirmPassword = null;
+            user.Password = "***";
+            user.ConfirmPassword = "***";
             return user;
         }
     }
